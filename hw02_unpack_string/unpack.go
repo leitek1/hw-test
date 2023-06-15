@@ -30,22 +30,21 @@ func Unpack(s string) (string, error) {
 			}
 			count, _ := strconv.Atoi(string(runes[i+1]))
 			if count != 0 {
-				if char == '\n' {
-					result.WriteString(strings.Repeat("\n", count))
-				} else {
-					result.WriteString(strings.Repeat(string(char), count))
-				}
+				result.WriteString(strings.Repeat(getRepeatCharacter(char), count))
 			}
 			i += 2
 		} else {
-			if char == '\n' {
-				result.WriteString("\n")
-			} else {
-				result.WriteString(string(char))
-			}
+			result.WriteString(getRepeatCharacter(char))
 			i++
 		}
 	}
 
 	return result.String(), nil
+}
+
+func getRepeatCharacter(char rune) string {
+	if char == '\n' {
+		return "\n"
+	}
+	return string(char)
 }
