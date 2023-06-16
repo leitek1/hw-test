@@ -22,10 +22,13 @@ func Unpack(s string) (string, error) {
 	runes := []rune(s)
 	i := 0
 
-	for i < len(runes) {
+	length := len(runes)
+
+	for i < length {
 		char := runes[i]
-		if i+1 < len(runes) && unicode.IsDigit(runes[i+1]) {
-			if unicode.IsDigit(char) || unicode.IsDigit(runes[i+2]) {
+
+		if i+1 < length && unicode.IsDigit(runes[i+1]) {
+			if unicode.IsDigit(char) || (length > i+2 && unicode.IsDigit(runes[i+2])) {
 				return "", ErrInvalidString
 			}
 			count, _ := strconv.Atoi(string(runes[i+1]))
@@ -43,8 +46,5 @@ func Unpack(s string) (string, error) {
 }
 
 func getRepeatCharacter(char rune) string {
-	if char == '\n' {
-		return "\n"
-	}
 	return string(char)
 }
